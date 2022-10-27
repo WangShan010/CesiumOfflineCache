@@ -42,8 +42,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="./Cesium/^1.95/Cesium.js"></script>
-    <link rel="stylesheet" href="./Cesium/^1.95/Widgets/widgets.css">
+    <script src="./Cesium/^1.98/Cesium.js"></script>
+    <link rel="stylesheet" href="./Cesium/^1.98/Widgets/widgets.css">
 </head>
 <body>
 <div id="MapContainer" style="width: 100%;height: 100%"></div>
@@ -59,9 +59,7 @@
 ```js
 import './CesiumOfflineCache.min.js';
 
-// 添加全局缓存的规则
 CesiumOfflineCache.ruleList.add('*');
-
 let viewer = new Cesium.Viewer('MapContainer', {
     imageryProvider: new Cesium.UrlTemplateImageryProvider({
         url: 'https://c.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
@@ -72,15 +70,19 @@ let viewer = new Cesium.Viewer('MapContainer', {
     animation: false
 });
 
+viewer.scene.camera.setView({
+    destination: Cesium.Cartesian3.fromDegrees(-122.3472, 47.598, 370),
+    orientation: {
+        heading: Cesium.Math.toRadians(10),
+        pitch: Cesium.Math.toRadians(-10)
+    }
+});
 
 setTimeout(() => {
-    const tileSet = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-        url: 'http://101.43.223.126:3000/Resources/3DTiles-TianYi/tileset.json',
-        maximumScreenSpaceError: 1
-    }));
-
-    viewer.flyTo(tileSet).then();
+    let tileSet = Cesium.createOsmBuildings();
+    viewer.scene.primitives.add(tileSet);
 }, 3000);
+
 ```
 
 
@@ -101,7 +103,6 @@ const CesiumOfflineCache = {
     judgeUrl(url) {},
     async getItem(k) {},
     async setItem(k, v) {},
-    async removeItem(k) {},
     async keys() {},
     async clear() {},
     // 计算缓存占用的存储空间大小
@@ -126,22 +127,5 @@ CesiumOfflineCache.ruleList.add('https://c.tile.thunderforest.com/');
 - 对指定地址的 3DTile 缓存
 
 ```js
-CesiumOfflineCache.ruleList.add('http://101.43.223.126:3000/Resources/3DTiles-TianYi/');
+CesiumOfflineCache.ruleList.add('http://xxx.xx.xx.xx:3000//3DTiles/');
 ```
-
-
-
-## 四、示例
-
-### 4.1、简单示例
-
-[http://101.43.223.126:3000/Resources/CesiumOfflineCache/Demo/1.起步/index.html](http://101.43.223.126:3000/Resources/CesiumOfflineCache/Demo/1.起步/index.html)
-
-
-
-### 4.2、性能对比
-
-[http://101.43.223.126:3000/Resources/CesiumOfflineCache/Demo/2.性能对比/index.html](http://101.43.223.126:3000/Resources/CesiumOfflineCache/Demo/2.性能对比/index.html)
-
-
-

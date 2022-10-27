@@ -1,4 +1,4 @@
-import '../../static/CesiumOfflineCache.min.js';
+import '../../static/CesiumOfflineCache/CesiumOfflineCache.min.js';
 
 CesiumOfflineCache.ruleList.add('*');
 let viewer = new Cesium.Viewer('MapContainer', {
@@ -14,7 +14,7 @@ let viewer = new Cesium.Viewer('MapContainer', {
 
 setTimeout(() => {
     const tileSet = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-        url: 'http://101.43.223.126:3000/Resources/3DTiles-TianYi/tileset.json',
+        url: 'http://xxx.xx.xxx.xxx:3000/Resources/3DTiles/tileset.json',
         maximumScreenSpaceError: 1
     }));
 

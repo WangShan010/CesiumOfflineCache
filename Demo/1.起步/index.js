@@ -1,4 +1,5 @@
-import '../static/CesiumOfflineCache.min.js';
+import '../static/CesiumOfflineCache/CesiumOfflineCache.min.js';
+
 
 CesiumOfflineCache.ruleList.add('*');
 let viewer = new Cesium.Viewer('MapContainer', {
@@ -11,11 +12,15 @@ let viewer = new Cesium.Viewer('MapContainer', {
     animation: false
 });
 
-setTimeout(() => {
-    const tileSet = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-        url: 'http://101.43.223.126:3000/Resources/3DTiles-TianYi/tileset.json',
-        maximumScreenSpaceError: 1
-    }));
+viewer.scene.camera.setView({
+    destination: Cesium.Cartesian3.fromDegrees(-122.3472, 47.598, 370),
+    orientation: {
+        heading: Cesium.Math.toRadians(10),
+        pitch: Cesium.Math.toRadians(-10)
+    }
+});
 
-    viewer.flyTo(tileSet).then();
+setTimeout(() => {
+    let tileSet = Cesium.createOsmBuildings();
+    viewer.scene.primitives.add(tileSet);
 }, 3000);
