@@ -1,7 +1,13 @@
 # CesiumOfflineCache
 
 
+
+
+
 本仓库已废弃，请关注新仓库：https://github.com/WangShan010/CesiumNetworkPlug
+
+
+
 
 
 这是一个 Cesium 插件，它使用 **indexDB** 离线缓存技术管理 影像图层、地形、3DTiles模型 等资源数据。
